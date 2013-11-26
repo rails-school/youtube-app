@@ -1,0 +1,52 @@
+window.YTb ||= {}
+YTb.App = angular.module('YTapp', [])
+App = YTb.App
+
+# 2. This code loads the IFrame Player API code asynchronously.
+tag = document.createElement("script")
+tag.src = "https://www.youtube.com/iframe_api"
+firstScriptTag = document.getElementsByTagName("script")[0]
+firstScriptTag.parentNode.insertBefore tag, firstScriptTag
+window.onYouTubeIframeAPIReady = ->
+  YTb.player = new YT.Player("player",
+    height: "390"
+    width: "640"
+    videoId: "M7lc1UVf-VE"
+    playerVars: {controls: 0}
+    events:
+      onReady: onPlayerReady
+      onStateChange: onPlayerStateChange
+  )
+  player = YTb.player
+
+onPlayerReady = (event) ->
+  event.target.playVideo()
+
+# 5. The API calls this function when the player's state changes.
+#    The function indicates that when playing a video (state=1),
+#    the player should play for six seconds and then stop.
+onPlayerStateChange = (event) ->
+  if event.data is YT.PlayerState.PLAYING and not done
+    setTimeout stopVideo, 6000
+    done = true
+stopVideo = ->
+  player.stopVideo()
+done = false
+
+App.controller "MyVideosCtrl", ["$scope", ($scope) ->
+  $scope.getData = (data) ->
+    $scope.videos = data.videos
+
+  $scope.play = ->
+    YTb.player.playVideo()
+
+  $scope.stop = ->
+    YTb.player.stopVideo()
+
+  $scope.pause = ->
+    YTb.player.pauseVideo()
+
+  $scope.load = (id) ->
+    YTb.player.loadVideoById(id)
+
+]

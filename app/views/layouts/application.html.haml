@@ -1,0 +1,23 @@
+!!!
+%html{ng: {app: "YTapp"}}
+  %head
+    %title Yt
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
+    = csrf_meta_tags
+
+    %script{:src => "http://www.google.com/jsapi", :type => "text/javascript"}
+  %body
+    .container
+      .header
+        %ul.nav.nav-pills.pull-right
+          %li.active
+            %a{href: '/'} Option 1
+          %li
+            %a{href: '/'} Option 2
+          %li
+            %a{href: '/'} Option 3
+        %h3.text-muted Playing With Youtube
+
+      = yield
