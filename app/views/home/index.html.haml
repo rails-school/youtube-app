@@ -1,14 +1,13 @@
-.row
-  %h1 Home#index
-  %p Find me in app/views/home/index.html.haml
-  .main{ng: {controller: "MyVideosCtrl", init: "getData(#{@videos.to_json})"}}
-    #player
-      Hahaha
-    %a.btn{ng: {click: 'play()'}} Play
-    %a.btn{ng: {click: 'stop()'}} Stop
-    %a.btn{ng: {click: 'pause()'}} Pause
-    {{1+1}}
-    .video{ng: {repeat: 'video in videos'}}
-      %a{ng: {click: 'load(video.unique_id)'}}
-        %h4 {{video.title}}
-        %img{src: 'http://img.youtube.com/vi/{{video.unique_id}}/0.jpg'}
+.main{ng: {controller: 'MyVideosCtrl'}}
+  Hello, world, y'all! {{2+2}}
+  #player
+    Hello, world!
+
+  %a.btn{ng: {click: 'stop()'}} Stop it, y'all!
+  %a.btn{ng: {click: 'play()'}} Play it back!
+  %a.btn{ng: {click: 'pause()'}} I need to go to Rainbow. Pause it
+  %input{type: 'text', ng: {model: 'id'}}
+  %button{ng: {click: 'load(id)'}} Load this video!
+
+  #scrubber-wrapper{ng: {click: 'seekTo($event)'}}
+    #scrubber{style: "width: {{progress}}%"}
