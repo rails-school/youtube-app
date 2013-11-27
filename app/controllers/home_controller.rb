@@ -8,7 +8,11 @@ class HomeController < ApplicationController
 
 
     client = YouTubeIt::OAuth2Client.new(client_access_token: result['access_token'], client_refresh_token: result['refresh_token'], client_id: CLIENT_ID, client_secret: CLIENT_SECRET, dev_key: DEV_KEY, expires_at: result['expires_in'])
-    @videos = client.my_videos
-    binding.pry
+    begin
+      @videos = client.my_videos
+    rescue
+      client.refresh_access_token!
+      @videos = client.my_videos
+    end
   end
 end
