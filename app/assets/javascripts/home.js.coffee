@@ -17,23 +17,28 @@ window.onYouTubeIframeAPIReady = ->
       onReady: onPlayerReady
       onStateChange: onPlayerStateChange
   )
-  player = YTb.player
 
 onPlayerReady = (event) ->
   event.target.playVideo()
+  player = YTb.player
+  setInterval YTb.updatePlayerInfo, 250
 
 # 5. The API calls this function when the player's state changes.
 #    The function indicates that when playing a video (state=1),
 #    the player should play for six seconds and then stop.
 onPlayerStateChange = (event) ->
   if event.data is YT.PlayerState.PLAYING and not done
-    setTimeout stopVideo, 6000
     done = true
 stopVideo = ->
   player.stopVideo()
 done = false
 
 App.controller "MyVideosCtrl", ["$scope", ($scope) ->
+
+  YTb.updatePlayerInfo = ->
+    $scope.$apply ->
+      $scope.progress = YTb.player.getCurrentTime()
+
   $scope.getData = (data) ->
     $scope.videos = data.videos
 
